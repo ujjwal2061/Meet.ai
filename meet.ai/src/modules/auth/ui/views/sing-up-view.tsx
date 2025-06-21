@@ -3,6 +3,9 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { zodResolver } from '@hookform/resolvers/zod'; 
 import * as z from 'zod'; 
+import { useRouter } from "next/navigation";
+import { FaGoogle ,FaGithub} from "react-icons/fa";
+
 
 import {OctagonAlertIcon} from "lucide-react";
 import {useForm} from "react-hook-form";
@@ -13,7 +16,6 @@ import { Button } from "@/components/ui/button";
 import {Form,FormControl,FormField,FormLabel,FormItem,FormMessage } from "@/components/ui/form"
 import { Alert, AlertTitle } from "@/components/ui/alert"
 import { authClient } from "@/lib/auth-clients";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 // scheam of form 
@@ -27,7 +29,7 @@ const formSchema=z.object({
     path:["confirmPassword"]
 })
 export const  SingUpView=()=>{
-    const router=useRouter();
+      const router=useRouter();
     const [error,setError]=useState<string | null>(null)
     const [loading ,setIsLoading]=useState<boolean>(false)
     // react from-hook
@@ -47,12 +49,13 @@ export const  SingUpView=()=>{
      authClient.signUp.email({
         name:data.name,
         email:data.email,
-        password:data.password
+        password:data.password,
+        callbackURL:"/"
     },
     {
     onSuccess:()=>{
-        setIsLoading(false)
-        router.push("/");
+        setIsLoading(false);
+        router.push("/")
     },
     onError:({error})=>{
         setError(error.message)
@@ -65,7 +68,7 @@ export const  SingUpView=()=>{
      <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
            <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="p-6  md:p-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="p-4  md:p-8">
                <div className="flex flex-col gap-2  items-center  ">
                  <div className="flex flex-col   items-center text-center">
                    <h1 className="text-2xl font-bold font-sans">Let&apos;s get Started</h1>
@@ -83,7 +86,7 @@ export const  SingUpView=()=>{
                     </FormItem>
                  )} />
                 </div>
-                <div className="flex flex-row mt-4  w-full ">
+                <div className="flex flex-row  w-full ">
                  <FormField  control={form.control}  name="email" render={({field})=>(
                    <FormItem className=" w-full px-2 py-1 items-start ">
                    <FormLabel>Email</FormLabel>
@@ -102,6 +105,7 @@ export const  SingUpView=()=>{
                     <FormControl >
                       <Input
                         type="password" placeholder="********" {...field} />
+                        
                     </FormControl>
                      <FormMessage />
                     </FormItem>
@@ -134,8 +138,18 @@ export const  SingUpView=()=>{
                     <span className="bg-card text-muted-foreground relative z-120 px-2">or continue with</span>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
-                        <Button variant="outline" type="button" className="w-full" >Google</Button>
-                         <Button variant="outline" type="button" className="w-full" >Github</Button>
+                        <Button 
+                         onClick={()=>{
+                            authClient.signIn.social({
+                            provider:"google"
+                          })}}
+                        variant="outline" type="button" className="w-full cursor-pointer" > <FaGoogle  /></Button>
+                         <Button 
+                          onClick={()=>{
+                            authClient.signIn.social({
+                            provider:"github"
+                          })}}
+                         variant="outline" type="button" className="w-full cursor-pointer" ><FaGithub color="black" /></Button>
                     </div>
                     <div className="text-center text-sm">
                         Already  have an account ?{" "}

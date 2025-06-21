@@ -3,16 +3,17 @@ import { Card, CardContent } from "@/components/ui/card"
 import { zodResolver } from '@hookform/resolvers/zod'; 
 import * as z from 'zod'; 
 
+import { FaGithub,FaGoogle } from "react-icons/fa";
 import {OctagonAlertIcon} from "lucide-react";
 import {useForm} from "react-hook-form";
 import Link from "next/link";
+import { useRouter } from "next/navigation"
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {Form,FormControl,FormField,FormLabel,FormItem,FormMessage } from "@/components/ui/form"
 import { Alert, AlertTitle } from "@/components/ui/alert"
 import { authClient } from "@/lib/auth-clients";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 // scheam of form 
@@ -39,12 +40,13 @@ export const  SingInView=()=>{
     setError(null);
      authClient.signIn.email({
         email:data.email,
-        password:data.password
+        password:data.password,
+        callbackURL:"/"
     },
     {
     onSuccess:()=>{
-        setIsLoading(false)
-        router.push("/");
+      setIsLoading(false)
+      router.push("/")
     },
     onError:({error})=>{
         setError(error.message)
@@ -93,18 +95,19 @@ export const  SingInView=()=>{
                         <AlertTitle>{error}</AlertTitle>
                     </Alert>
                 )}
-                <Button 
-                    disabled={loading}
-                    type="submit" 
+                <Button disabled={loading} type="submit" 
                     className="w-full">Sing up</Button>
                     <div className="after:border-1.5 relative text-center text-sm after:absolute after:inset-0
                     after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
-                    <span className="bg-card text-muted-foreground relative z-120 px-2">or continue with</span>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                        <Button variant="outline" type="button" className="w-full" >Google</Button>
-                         <Button variant="outline" type="button" className="w-full" >Github</Button>
-                    </div>
+                      </div>
+                          <div className="grid grid-cols-2 gap-4">
+                              <Button  onClick={()=>{authClient.signIn.social({ provider:"google" })}}   variant="outline" type="button" className="w-full cursor-pointer" >
+                                <FaGoogle  />
+                              </Button>
+                              <Button  onClick={()=>{authClient.signIn.social({  provider:"github" })}}variant="outline" type="button" className="w-full cursor-pointer" >
+                                  <FaGithub color="black" />
+                              </Button>
+                                    </div>
                     <div className="text-center text-sm">
                         Don&apos;t have an account ?{" "}
                      <Link href={"/auth/sign-up"} className=" font-semibold tex-[14px]   underline underline-offset-4">Sign Up</Link>   
