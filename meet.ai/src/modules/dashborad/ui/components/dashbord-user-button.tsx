@@ -5,13 +5,19 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { DropdownMenuLabel, DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
 import {  ChevronDownIcon, CreditCardIcon, LogOutIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Drawer,DrawerContent ,DrawerTitle,DrawerDescription,DrawerTrigger, DrawerHeader, DrawerFooter} from "@/components/ui/drawer";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
 
 const DashboardSidebarUser=()=>{
+  const isMoblie=useIsMobile();
   const router=useRouter();
+
     const {data,isPending}=authClient.useSession();
     if(isPending || ! data?.user){
         return null ;
     }
+
     // logout function
     const Logout=async()=>{
    await authClient.signOut({
@@ -19,9 +25,45 @@ const DashboardSidebarUser=()=>{
     onSuccess:()=>{
       router.push("/auth/sign-in")
     }
-  }
-})
+  }})
+}
+
+    if(isMoblie){
+      return(
+        <Drawer>
+          <DrawerTrigger className="rounded-lg  gap-1 border border-border/10 p-3 w-full flex items-center justify-between bg-white/5 hover:bg-white/10 overflow-hidden">
+            {data.user.image ? (
+           <Avatar>
+            <AvatarImage src={data.user.image} />
+           </Avatar>
+         ) :null}
+         <div className="flex p-1   flex-col gap-0.5 text-left overflow-hidden flex-1 min-w-0">
+           <p className="text-sm  font-semibold truncate w-full ">
+            {data.user.name}
+           </p>
+           <p className="text-xs truncate w-full">{data.user.email}</p>
+         </div>
+         <ChevronDownIcon className="size-4 shrink-0 cursor-pointer"/>
+          </DrawerTrigger>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>{data.user.name}</DrawerTitle>
+               <DrawerDescription>{data.user.email}</DrawerDescription>
+            </DrawerHeader>
+            <DrawerFooter>
+              <Button variant={"outline"} onClick={()=>{}}>
+                <CreditCardIcon className="size-4 text-balck" />Billing
+                </Button>
+                 <Button variant={"outline"} onClick={Logout}>
+                <CreditCardIcon className="size-4 text-balck" />Logout
+                </Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+      )
     }
+
+
 return(
    <DropdownMenu >
      <DropdownMenuTrigger className="rounded-lg  gap-1 border border-border/10 p-3 w-full flex items-center justify-between bg-white/5 hover:bg-white/10 overflow-hidden">
