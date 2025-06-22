@@ -8,7 +8,7 @@ const Page= async()=>{
     headers:await headers(),
   })
   if(!session){
-    redirect("/auth/sign-Up")
+    redirect("/auth/sign-up")
   }
   return <HomeView />
 }

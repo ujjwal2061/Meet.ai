@@ -115,7 +115,7 @@ export const  SingInView=()=>{
               </div>
             </form>
            </Form>
-             <div className="bg-radial from-green-700 to-green-900 relative hidden
+             <div className="bg-radial from-sidebar-accent to-sidebar relative hidden
                md:flex flex-col gay-y-4 items-center justify-center">
                 <img src="/logo.svg"  alt="Image" className="h-[92px] w-[92px]" />
                 <p className="text-xl font-medium font-sans text-white font-">Meet.AI</p>

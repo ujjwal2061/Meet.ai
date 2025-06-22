@@ -64,7 +64,7 @@ export const  SingUpView=()=>{
 }
 
     return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4">
      <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
            <Form {...form}>
@@ -76,7 +76,7 @@ export const  SingUpView=()=>{
                  </div>
                 <div className="flex flex-row mt-4  w-full ">
                  <FormField  control={form.control}  name="name" render={({field})=>(
-                   <FormItem className=" w-full px-2 py-1 items-start ">
+                   <FormItem className=" w-full px-2 py-0.5 items-start ">
                    <FormLabel>Name</FormLabel>
                     <FormControl >
                       <Input
@@ -88,7 +88,7 @@ export const  SingUpView=()=>{
                 </div>
                 <div className="flex flex-row  w-full ">
                  <FormField  control={form.control}  name="email" render={({field})=>(
-                   <FormItem className=" w-full px-2 py-1 items-start ">
+                   <FormItem className=" w-full px-2 py-0.5 items-start ">
                    <FormLabel>Email</FormLabel>
                     <FormControl >
                       <Input
@@ -113,7 +113,7 @@ export const  SingUpView=()=>{
                 </div>
                  <div className="flex flex-row mt-4  w-full ">
                  <FormField  control={form.control}  name="confirmPassword" render={({field})=>(
-                   <FormItem className=" w-full px-2 py-1 items-start ">
+                   <FormItem className=" w-full px-2 py-0.5 items-start ">
                    <FormLabel>Confirm Password</FormLabel>
                     <FormControl >
                       <Input
@@ -158,7 +158,7 @@ export const  SingUpView=()=>{
               </div>
             </form>
            </Form>
-             <div className="bg-radial from-green-700 to-green-900 relative hidden
+             <div className="bg-radial from-sidebar-accent to-sidebar  relative hidden
                md:flex flex-col gay-y-4 items-center justify-center">
                 <img src="/logo.svg"  alt="Image" className="h-[92px] w-[92px]" />
                 <p className="text-xl font-medium font-sans text-white font-">Meet.AI</p>
