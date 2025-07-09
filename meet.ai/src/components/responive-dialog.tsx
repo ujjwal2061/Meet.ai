@@ -12,7 +12,7 @@ interface ResponseProps{
 }
 export  const ResponsiveDialog=({title,description,children, open,onOpenChange,}:ResponseProps)=>{
  const isMoblie=useIsMobile()
-
+// Moblie view 
  if(isMoblie){
     return(
         <Drawer open={open} onOpenChange={onOpenChange}>
